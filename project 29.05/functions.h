@@ -187,3 +187,112 @@ void editTask()
 
     cout << "Task updated.\n";
 }
+
+void searchByTitle()
+{
+    char searchTitle[50];
+    cout << "Enter title to search (end with ';'): ";
+    readText(searchTitle, 50);
+
+    bool found = false;
+    cout << "\nSearch results by title:\n";
+    for (int i = 0; i < totalTasks; i++)
+    {
+        bool match = true;
+        int j = 0;
+        // Порівнюємо символи обох рядків до їх кінця
+        while (searchTitle[j] != '\0' && taskList[i].title[j] != '\0')
+        {
+            if (searchTitle[j] != taskList[i].title[j])
+            {
+                match = false; // Знайдено відмінність
+                break;
+            }
+            j++;
+        }
+        // Перевіряємо, чи обидва рядки закінчилися одночасно, що свідчить про повний збіг
+        if (match && searchTitle[j] == '\0' && taskList[i].title[j] == '\0')
+        {
+            showTask(taskList[i], i); // Виводимо знайдену задачу
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        cout << "No tasks found with that title.\n";
+    }
+}
+
+void searchByPriority()
+{
+    int searchPrio;
+    cout << "Enter priority to search (1-10): ";
+    // Перевірка коректності вводу пріоритету для пошуку
+    while (!(cin >> searchPrio) || searchPrio < 1 || searchPrio > 10)
+    {
+        cout << "Invalid priority. Please enter a number between 1 and 10: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    bool found = false;
+    cout << "\nSearch results by priority " << searchPrio << ":\n";
+    for (int i = 0; i < totalTasks; ++i)
+    {
+        if (taskList[i].priority == searchPrio)
+        {
+            showTask(taskList[i], i);
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        cout << "No tasks found with priority " << searchPrio << ".\n";
+    }
+}
+
+void searchByDescription()
+{
+    char searchText[100];
+    cout << "Enter description text to search (end with ';'): ";
+    readText(searchText, 100);
+
+    bool found = false;
+    if (searchText[0] == '\0') // Перевірка на порожній пошуковий запит
+    {
+        cout << "Search text cannot be empty.\n";
+        return;
+    }
+
+    cout << "\nSearch results by description:\n";
+    for (int i = 0; i < totalTasks; ++i)
+    {
+        bool currentTaskMatches = false;
+        // Простий алгоритм пошуку підрядка в описі задачі
+        for (int j = 0; taskList[i].description[j] != '\0'; ++j)
+        {
+            int k = 0;
+            // Порівнюємо символи, поки не знайдемо невідповідність або кінець пошукового тексту
+            while (searchText[k] != '\0' && taskList[i].description[j + k] != '\0' &&
+                searchText[k] == taskList[i].description[j + k])
+            {
+                k++;
+            }
+            // Якщо досягли кінця пошукового тексту, значить, підрядок знайдено
+            if (searchText[k] == '\0')
+            {
+                currentTaskMatches = true;
+                break;
+            }
+        }
+        if (currentTaskMatches)
+        {
+            showTask(taskList[i], i);
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        cout << "No tasks found with that description.\n";
+    }
+}
