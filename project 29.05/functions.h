@@ -343,3 +343,42 @@ void sortByDate()
     }
     cout << "Tasks sorted by date (earliest first).\n";
 }
+
+void menu()
+{
+    int choice;
+
+    while (true) // Безкінечний цикл меню, поки користувач не вибере вихід
+    {
+        cout << "\n----- Task List Menu -----\n";
+        cout << "1. Add task\n";
+        cout << "2. Delete task\n";
+        cout << "3. Edit task\n";
+        cout << "4. Show all tasks\n";
+        cout << "5. Show tasks for today\n";
+        cout << "6. Show tasks for this week\n";
+        cout << "7. Show tasks for this month\n";
+        cout << "8. Search by title\n";
+        cout << "9. Search by priority\n";
+        cout << "10. Search by description\n";
+        cout << "11. Sort by priority\n";
+        cout << "12. Sort by date\n";
+        cout << "13. Mark task as completed\n";
+        cout << "0. Exit program\n";
+        cout << "--------------------------\n";
+
+        cout << "Your choice: ";
+        // Перевірка коректності вводу вибору користувача
+        while (!(cin >> choice))
+        {
+            cout << "Invalid input. Please enter a number: ";
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+
+        if (!handleMenu(choice))
+        {
+            break;
+        }
+    }
+}
