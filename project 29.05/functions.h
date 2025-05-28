@@ -81,3 +81,25 @@ void completeTask()
     taskList[index - 1].completed = true; // Позначаємо задачу виконаною
     cout << "Task marked as completed.\n";
 }
+void showTask(const Task& task, int index)
+{
+    cout << index + 1 << ") " << task.title << " | Priority: " << task.priority;
+    cout << (task.completed ? " [COMPLETED]\n" : "\n"); // Виводить статус виконання
+    cout << "    Description: " << task.description << "\n";
+    cout << "    Deadline: " << task.time.year << "-" << task.time.month << "-" << task.time.day;
+    cout << " " << task.time.hour << ":" << task.time.minute << "\n";
+}
+
+void listTasks()
+{
+    if (totalTasks == 0)
+    {
+        cout << "No tasks to display.\n";
+        return;
+    }
+    cout << "\nAll tasks:\n";
+    for (int i = 0; i < totalTasks; i++)
+    {
+        showTask(taskList[i], i);
+    }
+}
