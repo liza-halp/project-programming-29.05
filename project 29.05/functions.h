@@ -133,3 +133,57 @@ void listTasksThisWeek()
         showTask(taskList[i], i);
     }
 }
+void deleteTask()
+{
+    int index;
+    cout << "Enter task number to delete: ";
+    // Перевірка коректності вводу номера задачі
+    while (!(cin >> index) || index < 1 || index > totalTasks)
+    {
+        cout << "Invalid number. Please enter a valid task number: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    // Зсуваємо всі наступні задачі в масиві на одну позицію вліво
+    for (int i = index - 1; i < totalTasks - 1; i++)
+    {
+        taskList[i] = taskList[i + 1];
+    }
+
+    totalTasks--;
+    cout << "Task deleted.\n";
+}
+
+void editTask()
+{
+    int index;
+    cout << "Enter task number to edit: ";
+
+    while (!(cin >> index) || index < 1 || index > totalTasks)
+    {
+        cout << "Invalid number. Please enter a valid task number: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    Task& task = taskList[index - 1]; // Отримуємо посилання на задачу для редагування
+
+    cout << "Enter new title (end with ';'): ";
+    readText(task.title, 50);
+
+    cout << "Enter new priority (1-10): ";
+    while (!(cin >> task.priority) || task.priority < 1 || task.priority > 10)
+    {
+        cout << "Invalid priority. Please enter a number between 1 and 10: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    cout << "Enter new description (end with ';'): ";
+    readText(task.description, 100);
+
+    inputDateTime(task.time); // Вводимо нову дату та час
+
+    cout << "Task updated.\n";
+}
