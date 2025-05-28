@@ -94,3 +94,9 @@ bool handleMenu(int choice)
     }
     return true; // Повертаємо true, щоб продовжити роботу програми
 }
+
+int main()
+{
+    menu();
+    return 0;
+}
