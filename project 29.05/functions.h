@@ -296,3 +296,50 @@ void searchByDescription()
         cout << "No tasks found with that description.\n";
     }
 }
+void sortByPriority()
+{
+    // Сортування бульбашкою
+    for (int i = 0; i < totalTasks - 1; i++)
+    {
+        for (int j = 0; j < totalTasks - i - 1; j++)
+        {
+            if (taskList[j].priority < taskList[j + 1].priority)
+            {
+                Task temp = taskList[j];
+                taskList[j] = taskList[j + 1];
+                taskList[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Tasks sorted by priority (highest first).\n";
+}
+
+void sortByDate()
+{
+    // Сортування бульбашкою
+    for (int i = 0; i < totalTasks - 1; i++)
+    {
+        for (int j = 0; j < totalTasks - i - 1; j++)
+        {
+            DateTime a = taskList[j].time;
+            DateTime b = taskList[j + 1].time;
+
+            bool shouldSwap = false;
+
+            // Логіка порівняння дат: спочатку рік, потім місяць, день, година, хвилина
+            if (a.year > b.year) shouldSwap = true;
+            else if (a.year == b.year && a.month > b.month) shouldSwap = true;
+            else if (a.year == b.year && a.month == b.month && a.day > b.day) shouldSwap = true;
+            else if (a.year == b.year && a.month == b.month && a.day == b.day && a.hour > b.hour) shouldSwap = true;
+            else if (a.year == b.year && a.month == b.month && a.day == b.day && a.hour == b.hour && a.minute > b.minute) shouldSwap = true;
+
+            if (shouldSwap)
+            {
+                Task temp = taskList[j];
+                taskList[j] = taskList[j + 1];
+                taskList[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Tasks sorted by date (earliest first).\n";
+}
