@@ -1,9 +1,3 @@
-//
-//  functions.h
-//  project 29.05
-//
-//  Created by Лиза on 08.05.2025.
-//
 void readText(char* text, int maxLength)
 {
     int i = 0;
@@ -37,4 +31,53 @@ void inputDateTime(DateTime& dt)
         cin.clear();
         cin.ignore(1000, '\n');
     }
+}
+
+void addTask()
+{
+    if (totalTasks >= MAX_TASKS) // Перевірка на переповнення списку задач
+    {
+        cout << "Task list is full. Cannot add a new task.\n";
+        return;
+    }
+
+    Task& task = taskList[totalTasks]; // Посилання на нову задачу в масиві
+
+    cout << "Enter task title (end with ';'): ";
+    readText(task.title, 50); // Зчитуємо назву задачі
+
+    cout << "Enter priority (1-10): ";
+    // Цикл для перевірки коректності вводу пріоритету
+    while (!(cin >> task.priority) || task.priority < 1 || task.priority > 10)
+    {
+        cout << "Invalid priority. Please enter a number between 1 and 10: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    cout << "Enter task description (end with ';'): ";
+    readText(task.description, 100); // Зчитуємо опис задачі
+
+    inputDateTime(task.time);
+
+    task.completed = false; // Нова задача завжди не виконана за замовчуванням
+
+    totalTasks++; // Збільшуємо лічильник задач
+    cout << "Task added.\n";
+}
+
+void completeTask()
+{
+    int index;
+    cout << "Enter task number to mark as completed: ";
+
+    while (!(cin >> index) || index < 1 || index > totalTasks)
+    {
+        cout << "Invalid number. Please enter a valid task number: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+
+    taskList[index - 1].completed = true; // Позначаємо задачу виконаною
+    cout << "Task marked as completed.\n";
 }
