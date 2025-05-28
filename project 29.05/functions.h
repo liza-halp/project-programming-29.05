@@ -103,3 +103,33 @@ void listTasks()
         showTask(taskList[i], i);
     }
 }
+
+// Виводить задачі, що мають бути виконані сьогодні
+void listTasksToday()
+{
+    cout << "Tasks for today:\n";
+    if (totalTasks == 0)
+    {
+        cout << "No tasks to display.\n";
+        return;
+    }
+    for (int i = 0; i < totalTasks; ++i)
+    {
+        showTask(taskList[i], i);
+    }
+}
+
+// Виводить задачі, що мають бути виконані цього тижня
+void listTasksThisWeek()
+{
+    cout << "Tasks for this week:\n";
+    if (totalTasks == 0)
+    {
+        cout << "No tasks to display.\n";
+        return;
+    }
+    for (int i = 0; i < totalTasks; ++i)
+    {
+        showTask(taskList[i], i);
+    }
+}
